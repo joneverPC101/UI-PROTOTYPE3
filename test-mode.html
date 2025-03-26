@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Select Test Mode</title>
+  <link rel="stylesheet" href="test-mode.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Select Test Mode</h2>
+    <p>Please choose which subject area you want to take.</p>
+
+    <form id="mode-form" onsubmit="startTest(event)">
+      <label>
+        <input type="radio" name="mode" value="grammar" required />
+        Grammar
+      </label>
+      <label>
+        <input type="radio" name="mode" value="vocabulary" />
+        Vocabulary
+      </label>
+      <label>
+        <input type="radio" name="mode" value="reading" />
+        Reading Comprehension
+      </label>
+
+      <button type="submit">Start Test</button>
+    </form>
+  </div>
+
+  <script>
+    function startTest(e) {
+      e.preventDefault();
+      const selectedMode = document.querySelector('input[name="mode"]:checked').value;
+      localStorage.setItem("selectedMode", selectedMode);
+      window.location.href = "test.html"; // Next page to take the actual test
+    }
+  </script>
+</body>
+</html>

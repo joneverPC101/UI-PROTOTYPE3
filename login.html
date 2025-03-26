@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart E-Assessment Login</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="container">
+    <form class="login-box" onsubmit="handleLogin(event)">
+      <h2>Smart E-Assessment Login</h2>
+      <p>Enter your credentials to begin the test.</p>
+
+      <label for="username">Username</label>
+      <div class="input-box">
+        <span class="icon">👤</span>
+        <input type="text" id="username" placeholder="Enter username" required />
+      </div>
+
+      <label for="password">Password</label>
+      <div class="input-box">
+        <span class="icon">🔒</span>
+        <input type="password" id="password" placeholder="Enter password" required />
+      </div>
+
+      <button type="submit" class="login-btn">Log In</button>
+      <p id="error-message"></p>
+    </form>
+  </div>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("error-message");
+
+      if (username === "student" && password === "1234") {
+        window.location.href = "test-mode.html";
+      } else {
+        errorMsg.textContent = "Invalid login. Please try again.";
+        errorMsg.style.color = "red";
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Result</title>
+  <link rel="stylesheet" href="results.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Test Result</h2>
+    <p><strong>Test Taken:</strong> <span id="mode"></span></p>
+    <p><strong>Score:</strong> <span id="score"></span></p>
+    <p id="feedback"></p>
+
+    <div class="buttons">
+      <button onclick="retake()">🔁 Retake Test</button>
+      <button onclick="backToMode()">↩ Back to Test Mode</button>
+    </div>
+  </div>
+
+  <script>
+    const score = parseInt(localStorage.getItem("finalScore") || 0);
+    const mode = localStorage.getItem("testMode") || "N/A";
+
+    document.getElementById("mode").textContent = mode.toUpperCase();
+    document.getElementById("score").textContent = `${score} out of 3`;
+
+    const feedback = document.getElementById("feedback");
+    if (score === 3) {
+      feedback.textContent = "Excellent! You showed strong understanding.";
+    } else if (score === 2) {
+      feedback.textContent = "Good! You have a solid grasp of the topic.";
+    } else {
+      feedback.textContent = "Needs improvement. Review the topic and try again.";
+    }
+
+    function retake() {
+      window.location.href = "test.html";
+    }
+
+    function backToMode() {
+      window.location.href = "test-mode.html";
+    }
+  </script>
+</body>
+</html>

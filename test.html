@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Mode</title>
+  <link rel="stylesheet" href="test.css" />
+</head>
+<body>
+  <div class="container">
+    <h2 id="mode-title">Test: </h2>
+    <div id="question-box">
+      <p id="question-text">Loading question...</p>
+      <form id="answer-form" onsubmit="submitAnswer(event)">
+        <div id="choices"></div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const questions = {
+      grammar: [
+        { id: 1, difficulty: 1, question: "She ___ to school every day.", choices: ["go", "goes", "gone", "going"], correct: "goes" },
+        { id: 2, difficulty: 2, question: "Neither of the boys ___ been there.", choices: ["has", "have", "had", "is"], correct: "has" },
+        { id: 3, difficulty: 3, question: "Had I known, I ___ acted differently.", choices: ["will", "would", "should", "have"], correct: "would" },
+      ],
+      vocabulary: [
+        { id: 1, difficulty: 1, question: "Synonym of 'happy' is...", choices: ["sad", "angry", "joyful", "tired"], correct: "joyful" },
+        { id: 2, difficulty: 2, question: "'Meticulous' means...", choices: ["careless", "thorough", "fast", "lazy"], correct: "thorough" },
+        { id: 3, difficulty: 3, question: "Opposite of 'expand' is...", choices: ["grow", "enlarge", "shrink", "add"], correct: "shrink" },
+      ],
+      reading: [
+        { id: 1, difficulty: 1, question: "What is the main idea of a paragraph?", choices: ["Detail", "Topic", "Theme", "Point"], correct: "Point" },
+        { id: 2, difficulty: 2, question: "Inference means...", choices: ["Guessing", "Explaining", "Concluding", "Reading"], correct: "Concluding" },
+        { id: 3, difficulty: 3, question: "An author’s purpose is to...", choices: ["Draw", "Persuade", "Dance", "Sing"], correct: "Persuade" },
+      ]
+    };
+
+    const selectedMode = localStorage.getItem("selectedMode") || "grammar";
+    const modeQuestions = questions[selectedMode];
+
+    let index = 0;
+    let score = 0;
+
+    document.getElementById("mode-title").textContent = `Test: ${selectedMode.toUpperCase()}`;
+
+    function loadQuestion() {
+      if (index >= modeQuestions.length) {
+        localStorage.setItem("finalScore", score);
+        localStorage.setItem("testMode", selectedMode);
+        window.location.href = "results.html";
+        return;
+      }
+
+      const q = modeQuestions[index];
+      document.getElementById("question-text").textContent = q.question;
+
+      const choicesHTML = q.choices.map(choice => `
+        <label><input type="radio" name="answer" value="${choice}" required /> ${choice}</label>
+      `).join("");
+
+      document.getElementById("choices").innerHTML = choicesHTML;
+    }
+
+    function submitAnswer(e) {
+      e.preventDefault();
+      const q = modeQuestions[index];
+      const selected = document.querySelector('input[name="answer"]:checked').value;
+
+      if (selected === q.correct) {
+        score++;
+      }
+
+      index++;
+      loadQuestion();
+    }
+
+    // Init
+    loadQuestion();
+  </script>
+</body>
+</html>
